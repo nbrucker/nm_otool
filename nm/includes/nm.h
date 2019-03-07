@@ -3,10 +3,21 @@
 
 # include <fcntl.h>
 # include <sys/mman.h>
+# include <sys/stat.h>
+# include <mach-o/loader.h>
+# include <mach-o/nlist.h>
 
 #include <stdio.h>
 
-void	error_opening_file(char *str);
-void	error_not_file(char *str);
+typedef struct  s_cmd
+{
+  char*         name;
+  uint64_t      value;
+  struct s_cmd  *next;
+  struct s_cmd  *previous;
+}               t_cmd;
+
+void	          error_opening_file(char *str);
+void	          error_not_file(char *str);
 
 #endif

@@ -20,7 +20,8 @@ OBJSDIR = objs/
 
 SRCS = 	ft_putchar.c \
 		ft_putstr.c \
-		ft_putendl.c
+		ft_putendl.c \
+		ft_strcmp.c
 
 OBJS = $(addprefix $(OBJSDIR),$(SRCS:.c=.o))
 
