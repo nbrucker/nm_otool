@@ -67,18 +67,18 @@ void	print_cmds(t_cmd *cmds)
 	cmds = get_first_cmd(cmds);
 	while (cmds)
 	{
-		printf("%016llx T %s\n", cmds->value, cmds->name);
+		printf("%016llx %d %s\n", cmds->value, cmds->type, cmds->name);
 		cmds = cmds->next;
 	}
 }
 
-void	handle_64_symtab(struct load_command *lc, void* ptr)
+void	handle_64_symtab(struct load_command *lc, void *ptr)
 {
-	struct symtab_command *sym;
-	uint32_t							i;
-	char									*table;
-	struct nlist_64				*list;
-	t_cmd									*cmds;
+	struct symtab_command	*sym;
+	uint32_t				i;
+	char					*table;
+	struct nlist_64			*list;
+	t_cmd					*cmds;
 
 	cmds = NULL;
 	sym = (struct symtab_command*)lc;
@@ -89,9 +89,10 @@ void	handle_64_symtab(struct load_command *lc, void* ptr)
 	{
 		//printf("%s: %llx\n", table + list[i].n_un.n_strx, list[i].n_value);
 		if (!(cmds = create_cmd(cmds)))
-			return(ft_putendl("malloc error"));
+			return (ft_putendl("malloc error"));
 		cmds->name = table + list[i].n_un.n_strx;
 		cmds->value = list[i].n_value;
+		cmds->type = list[i].n_type & N_TYPE;
 		i++;
 	}
 	print_cmds(cmds);
@@ -101,7 +102,7 @@ void	handle_64(void *ptr)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;
-	uint32_t							i;
+	uint32_t				i;
 
 	header = (struct mach_header_64*)ptr;
 	lc = ptr + sizeof(struct mach_header_64);
@@ -117,11 +118,12 @@ void	handle_64(void *ptr)
 
 void	nm(void *ptr)
 {
-	unsigned int	magic;
+	uint32_t	magic;
 
-	magic = ((unsigned int*)ptr)[0];
+	magic = ((uint32_t*)ptr)[0];
 	if (magic == MH_MAGIC_64)
 		handle_64(ptr);
+	printf("%x\n", magic);
 }
 
 void	handle_file(char *str)
