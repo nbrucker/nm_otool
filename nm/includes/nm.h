@@ -9,11 +9,21 @@
 
 #include <stdio.h>
 
+typedef struct    s_env
+{
+  void            *ptr;
+
+  int             sec_index; 
+  int             t_index;
+  int             d_index;
+  int             b_index;
+}                 t_env;
+
 typedef struct		s_cmd
 {
 	char			*name;
 	uint64_t		value;
-	unsigned char	type;
+	char          type;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }					t_cmd;

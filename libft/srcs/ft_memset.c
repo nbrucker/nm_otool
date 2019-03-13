@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbrucker <nbrucker@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,18 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
+void	*ft_memset(void *b, int c, size_t len)
+{
+	char			*str;
+	unsigned char	uc;
+	size_t			i;
 
-void	ft_putchar(char c);
-void	ft_putstr(char const *s);
-void	ft_putendl(char const *s);
-
-int		ft_strcmp(const char *s1, const char *s2);
-void	*ft_memset(void *b, int c, size_t len);
-void	ft_bzero(void *s, size_t n);
-
-#endif
+	uc = (unsigned char)c;
+	str = (char*)b;
+	i = 0;
+	while (i < len)
+	{
+		str[i] = uc;
+		i++;
+	}
+	return ((void*)str);
+}
