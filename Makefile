@@ -20,8 +20,15 @@ DIR_NM = nm/
 
 DIR_OTOOL = otool/
 
-SRCS_NM =	main.c \
-			error.c
+SRCS_NM =	create.c \
+					error.c \
+					get.c \
+					handle_64.c \
+					init.c \
+					main.c \
+					print.c \
+					treat_cmd.c \
+
 
 SRCS_OTOOL = main.c
 
@@ -33,11 +40,11 @@ OBJS_NM = $(addprefix $(DIR_NM)$(OBJSDIR),$(SRCS_NM:.c=.o))
 
 OBJS_OTOOL = $(addprefix $(DIR_OTOOL)$(OBJSDIR),$(SRCS_OTOOL:.c=.o))
 
-$(DIR_NM)$(OBJSDIR)%.o: $(DIR_NM)$(SRCSDIR)%.c $(addprefix $(DIR_NM)$(INCSDIR),$(HDRS_NM))
+$(DIR_NM)$(OBJSDIR)%.o: $(DIR_NM)$(SRCSDIR)%.c $(addprefix $(DIR_NM)$(INCSDIR),$(HDRS_NM)) Makefile
 	@mkdir -p $(DIR_NM)$(OBJSDIR)
 	$(CC) $(CFLAGS) -I $(DIR_NM)$(INCSDIR) -I $(LIBFTDIR)$(INCSDIR) -o $@ -c $<
 
-$(DIR_OTOOL)$(OBJSDIR)%.o: $(DIR_OTOOL)$(SRCSDIR)%.c $(addprefix $(DIR_OTOOL)$(INCSDIR),$(HDRS_OTOOL))
+$(DIR_OTOOL)$(OBJSDIR)%.o: $(DIR_OTOOL)$(SRCSDIR)%.c $(addprefix $(DIR_OTOOL)$(INCSDIR),$(HDRS_OTOOL)) Makefile
 	@mkdir -p $(DIR_OTOOL)$(OBJSDIR)
 	$(CC) $(CFLAGS) -I $(DIR_OTOOL)$(INCSDIR) -I $(LIBFTDIR)$(INCSDIR) -o $@ -c $<
 
