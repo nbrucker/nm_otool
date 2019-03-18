@@ -17,14 +17,15 @@ void	handle_be_64(t_env *env)
 	{
 		lc->cmdsize = reverse_int(lc->cmdsize);
 		lc->cmd = reverse_int(lc->cmd);
-		if (lc->cmd == LC_SEGMENT)
+		if (lc->cmd == LC_SEGMENT_64)
 			handle_be_64_segment(lc, env);
 		else if (lc->cmd == LC_SYMTAB)
 			handle_be_64_symtab(lc, env);
 		lc = (void*)lc + lc->cmdsize;
 		i++;
 	}
-	handle_64(env);
+	if (env->error == 0)
+		handle_64(env);
 }
 
 void	handle_be_64_segment(struct load_command *lc, t_env *env)

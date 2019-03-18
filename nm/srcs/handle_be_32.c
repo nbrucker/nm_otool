@@ -24,7 +24,8 @@ void	handle_be_32(t_env *env)
 		lc = (void*)lc + lc->cmdsize;
 		i++;
 	}
-	handle_32(env);
+	if (env->error == 0)
+		handle_32(env);
 }
 
 void	handle_be_32_segment(struct load_command *lc, t_env *env)

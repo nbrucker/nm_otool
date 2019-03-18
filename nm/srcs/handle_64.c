@@ -5,23 +5,41 @@ void	handle_64(t_env *env)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;
-	uint32_t				i;
 
+	lc = NULL;
 	if (!(header = (struct mach_header_64*)check_addr(env->ptr,
 		sizeof(struct mach_header_64), env)))
 		return ;
+	h64_seg(header, lc, env);
+	h64_sym(header, lc, env);
+}
+
+void	h64_seg(struct mach_header_64 *h, struct load_command *lc, t_env *env)
+{
+	uint32_t i;
+
 	lc = env->ptr + sizeof(struct mach_header_64);
 	i = 0;
-	while (i < header->ncmds && check_addr(lc, sizeof(struct load_command), env))
+	while (i < h->ncmds && check_addr(lc, sizeof(struct load_command), env)
+		&& env->error == 0)
 	{
+		if (lc->cmdsize % 8 != 0)
+			return (error_cmdsize(env));
 		if (lc->cmd == LC_SEGMENT_64)
 			handle_64_segment(lc, env);
 		lc = (void*)lc + lc->cmdsize;
 		i++;
 	}
+}
+
+void	h64_sym(struct mach_header_64 *h, struct load_command *lc, t_env *env)
+{
+	uint32_t i;
+
 	lc = env->ptr + sizeof(struct mach_header_64);
 	i = 0;
-	while (i < header->ncmds && check_addr(lc, sizeof(struct load_command), env))
+	while (i < h->ncmds && check_addr(lc, sizeof(struct load_command), env)
+		&& env->error == 0)
 	{
 		if (lc->cmd == LC_SYMTAB)
 			handle_64_symtab(lc, env);

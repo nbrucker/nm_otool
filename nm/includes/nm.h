@@ -22,6 +22,8 @@ typedef struct    s_env
   int             t_index;
   int             d_index;
   int             b_index;
+
+  int             error;
 }                 t_env;
 
 typedef struct		s_cmd
@@ -45,6 +47,14 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env);
 t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env);
 
 /*
+*** error.c
+*/
+int				error_not_file(char *str);
+int				error_opening_file(char *str);
+int       ft_error(char *str);
+void      error_cmdsize(t_env *env);
+
+/*
 *** get.c
 */
 char	get_type_32(struct nlist list, t_env *env);
@@ -63,6 +73,8 @@ void	handle_32_symtab(struct load_command *lc, t_env *env);
 *** handle_64.c
 */
 void	handle_64(t_env *env);
+void	h64_seg(struct mach_header_64 *h, struct load_command *lc, t_env *env);
+void	h64_sym(struct mach_header_64 *h, struct load_command *lc, t_env *env);
 void	handle_64_segment(struct load_command *lc, t_env *env);
 void	handle_64_symtab(struct load_command *lc, t_env *env);
 
@@ -88,14 +100,8 @@ t_env	*init_env(void *ptr, size_t size);
 /*
 *** main.c
 */
-void	nm(void *ptr, size_t size);
-void	handle_file(char *str, int ac);
-
-/*
-*** error.c
-*/
-void				error_not_file(char *str);
-void				error_opening_file(char *str);
+int	nm(void *ptr, size_t size);
+int	handle_file(char *str, int ac);
 
 /*
 *** print.c
