@@ -23,7 +23,9 @@ SRCS = 	ft_putchar.c \
 		ft_putendl.c \
 		ft_strcmp.c \
 		ft_memset.c \
-		ft_bzero.c
+		ft_bzero.c \
+		ft_strdup.c \
+		ft_strlen.c
 
 OBJS = $(addprefix $(OBJSDIR),$(SRCS:.c=.o))
 

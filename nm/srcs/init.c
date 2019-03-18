@@ -1,7 +1,7 @@
 #include "libft.h"
 #include "nm.h"
 
-t_env	*init_env(void)
+t_env	*init_env(void *ptr, size_t size)
 {
 	t_env			*env;
 
@@ -9,5 +9,7 @@ t_env	*init_env(void)
 		return (NULL);
 	ft_bzero((void*)env, sizeof(t_env));
 	env->sec_index = 1;
+  env->ptr = ptr;
+  env->size = size;
 	return (env);
 }

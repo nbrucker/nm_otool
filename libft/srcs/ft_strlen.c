@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbrucker <nbrucker@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,21 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
+size_t	ft_strlen(const char *s)
+{
+	size_t i;
 
-void	ft_putchar(char c);
-void	ft_putstr(char const *s);
-void	ft_putendl(char const *s);
-
-int		ft_strcmp(const char *s1, const char *s2);
-void	*ft_memset(void *b, int c, size_t len);
-void	ft_bzero(void *s, size_t n);
-char	*ft_strdup(const char *s1);
-
-size_t	ft_strlen(const char *s);
-
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}

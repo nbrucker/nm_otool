@@ -1,17 +1,28 @@
 #include "libft.h"
 #include "nm.h"
 
-void	nm(void *ptr)
+//pas ranger
+
+
+
+ //ranger
+
+void	nm(void *ptr, size_t size)
 {
 	uint32_t	magic;
 	t_env			*env;
 
-	if (!(env = init_env()))
+	if (!(env = init_env(ptr, size)))
 		return ;
-	env->ptr = ptr;
+	if (size < 4)
+		return ;
 	magic = ((uint32_t*)ptr)[0];
 	if (magic == MH_MAGIC_64)
 		handle_64(env);
+	else if (magic == MH_MAGIC)
+		handle_32(env);
+	else if (magic == MH_CIGAM)
+		handle_be_32(env);
 	else
 		printf("%x\n", magic);
 	free(env);
@@ -29,12 +40,12 @@ void	handle_file(char *str, int ac)
 		return (ft_putendl("fstat error"));
 	if (!S_ISREG(buf.st_mode))
 		return (error_not_file(str));
-	ptr = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+	ptr = mmap(NULL, buf.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
 	if (ptr == MAP_FAILED)
 		return (ft_putendl("mmap error"));
 	if (ac > 2)
 		print_file_name(str);
-	nm(ptr);
+	nm(ptr, buf.st_size);
 	munmap(ptr, buf.st_size);
 	close(fd);
 }

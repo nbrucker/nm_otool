@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbrucker <nbrucker@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
+char	*ft_strdup(const char *s1)
+{
+	char	*str;
+	int		i;
 
-void	ft_putchar(char c);
-void	ft_putstr(char const *s);
-void	ft_putendl(char const *s);
-
-int		ft_strcmp(const char *s1, const char *s2);
-void	*ft_memset(void *b, int c, size_t len);
-void	ft_bzero(void *s, size_t n);
-char	*ft_strdup(const char *s1);
-
-size_t	ft_strlen(const char *s);
-
-#endif
+	if ((str = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))) == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}

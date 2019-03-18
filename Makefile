@@ -20,13 +20,18 @@ DIR_NM = nm/
 
 DIR_OTOOL = otool/
 
-SRCS_NM =	create.c \
+SRCS_NM =	check.c \
+					create.c \
 					error.c \
 					get.c \
+					handle_32.c \
 					handle_64.c \
+					handle_be_32.c \
+					handle_be_64.c \
 					init.c \
 					main.c \
 					print.c \
+					reverse.c \
 					treat_cmd.c \
 
 

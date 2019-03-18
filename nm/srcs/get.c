@@ -1,12 +1,37 @@
 #include "nm.h"
 
+char	get_type_32(struct nlist list, t_env *env)
+{
+	char					r;
+	unsigned char	c;
+
+	c = list.n_type & N_TYPE;
+	if (c == N_UNDF && list.n_value)
+		r = 'C';
+	else if (c == N_UNDF)
+		r = 'U';
+	else if (c == N_ABS)
+		r = 'A';
+	else if (c == N_SECT)
+		r = get_section_64(list.n_sect, env);
+	else if (c == N_PBUD)
+		r = 'U';
+	else if (c == N_INDR)
+		r = 'I';
+	else
+		r = '?';
+	if (r != '?' && !(list.n_type & N_EXT))
+		r += 32;
+	return (r);
+}
+
 char	get_type_64(struct nlist_64 list, t_env *env)
 {
 	char					r;
 	unsigned char	c;
 
 	c = list.n_type & N_TYPE;
-	if (c == N_UNDF && list.n_type & N_EXT && list.n_value)
+	if (c == N_UNDF && list.n_value)
 		r = 'C';
 	else if (c == N_UNDF)
 		r = 'U';
