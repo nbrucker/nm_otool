@@ -23,6 +23,7 @@ DIR_OTOOL = otool/
 SRCS_NM =	check.c \
 					create.c \
 					error.c \
+					free.c \
 					get.c \
 					handle_32.c \
 					handle_64.c \

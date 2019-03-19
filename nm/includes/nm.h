@@ -55,6 +55,11 @@ int       ft_error(char *str);
 void      error_cmdsize(t_env *env);
 
 /*
+*** free.c
+*/
+void  free_cmds(t_cmd *cmd);
+
+/*
 *** get.c
 */
 char	get_type_32(struct nlist list, t_env *env);
@@ -66,6 +71,8 @@ t_cmd	*get_first_cmd(t_cmd *cmds);
 *** handle_32.c
 */
 void	handle_32(t_env *env);
+void  h32_seg(struct mach_header *h, struct load_command *lc, t_env *env);
+void  h32_sym(struct mach_header *h, struct load_command *lc, t_env *env);
 void	handle_32_segment(struct load_command *lc, t_env *env);
 void	handle_32_symtab(struct load_command *lc, t_env *env);
 

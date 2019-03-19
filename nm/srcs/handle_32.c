@@ -10,18 +10,36 @@ void	handle_32(t_env *env)
 	if (!(header = (struct mach_header*)check_addr(env->ptr,
 		sizeof(struct mach_header), env)))
 		return ;
+	h32_seg(header, lc, env);
+	h32_sym(header, lc, env);
+}
+
+void	h32_seg(struct mach_header *h, struct load_command *lc, t_env *env)
+{
+	uint32_t i;
+
 	lc = env->ptr + sizeof(struct mach_header);
 	i = 0;
-	while (i < header->ncmds && check_addr(lc, sizeof(struct load_command), env))
+	while (i < h->ncmds && check_addr(lc, sizeof(struct load_command), env)
+		&& env->error == 0)
 	{
+		if (lc->cmdsize % 4 != 0)
+			return (error_cmdsize(env));
 		if (lc->cmd == LC_SEGMENT)
 			handle_32_segment(lc, env);
 		lc = (void*)lc + lc->cmdsize;
 		i++;
 	}
+}
+
+void	h32_sym(struct mach_header *h, struct load_command *lc, t_env *env)
+{
+	uint32_t i;
+
 	lc = env->ptr + sizeof(struct mach_header);
 	i = 0;
-	while (i < header->ncmds && check_addr(lc, sizeof(struct load_command), env))
+	while (i < h->ncmds && check_addr(lc, sizeof(struct load_command), env)
+		&& env->error == 0)
 	{
 		if (lc->cmd == LC_SYMTAB)
 			handle_32_symtab(lc, env);
@@ -75,9 +93,11 @@ void	handle_32_symtab(struct load_command *lc, t_env *env)
 	{
 		if (!(list[i].n_type & N_STAB))
 			if (!(cmds = create_cmd_32(cmds, table, list[i], env)))
-				return (ft_putendl("malloc error"));
+				return ;
 		i++;
 	}
+	if (env->error == 1)
+		return (free_cmds(cmds));
 	env->type = 32;
 	print_cmds(env, cmds);
 }

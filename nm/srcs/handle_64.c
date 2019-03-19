@@ -96,6 +96,8 @@ void	handle_64_symtab(struct load_command *lc, t_env *env)
 				return ;
 		i++;
 	}
+	if (env->error == 1)
+		return (free_cmds(cmds));
 	env->type = 64;
 	print_cmds(env, cmds);
 }

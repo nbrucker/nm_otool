@@ -5,7 +5,7 @@
 
 
 
- //ranger
+//ranger
 
 int	nm(void *ptr, size_t size)
 {
