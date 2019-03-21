@@ -40,6 +40,7 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
 		new->name = ft_strdup(table + list.n_un.n_strx);
 	else
 		new->name = ft_strdup("bad string index");
+	env->error = 0;
 	if (!new->name)
 		return (error_cmd(env, cmds, new));
 	new->value = list.n_value;
@@ -67,6 +68,7 @@ t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env)
 		new->name = ft_strdup(table + list.n_un.n_strx);
 	else
 		new->name = ft_strdup("bad string index");
+	env->error = 0;
 	if (!new->name)
 		return (error_cmd(env, cmds, new));
 	new->value = list.n_value;

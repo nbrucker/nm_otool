@@ -6,7 +6,7 @@ char	get_type_32(struct nlist list, t_env *env)
 	unsigned char	c;
 
 	c = list.n_type & N_TYPE;
-	if (c == N_UNDF && list.n_value)
+	if (c == N_UNDF && list.n_value != 0)
 		r = 'C';
 	else if (c == N_UNDF)
 		r = 'U';
