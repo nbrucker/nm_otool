@@ -29,6 +29,7 @@ SRCS_NM =	check.c \
 					handle_64.c \
 					handle_be_32.c \
 					handle_be_64.c \
+					handle_fat.c \
 					init.c \
 					main.c \
 					print.c \

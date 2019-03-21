@@ -25,7 +25,8 @@ SRCS = 	ft_putchar.c \
 		ft_memset.c \
 		ft_bzero.c \
 		ft_strdup.c \
-		ft_strlen.c
+		ft_strlen.c \
+		ft_memcpy.c
 
 OBJS = $(addprefix $(OBJSDIR),$(SRCS:.c=.o))
 

@@ -13,9 +13,9 @@ int	nm(void *ptr, size_t size)
 	t_env			*env;
 
 	if (!(env = init_env(ptr, size)))
-		return (-1);
+		return (1);
 	if (size < 4)
-		return (-1);
+		return (1);
 	magic = ((uint32_t*)ptr)[0];
 	if (magic == MH_MAGIC_64)
 		handle_64(env);
@@ -25,8 +25,14 @@ int	nm(void *ptr, size_t size)
 		handle_be_32(env);
 	else if (magic == MH_CIGAM_64)
 		handle_be_64(env);
+	else if (magic == FAT_MAGIC)
+		handle_fat(env);
+	else if (magic == FAT_CIGAM)
+		handle_be_fat(env);
 	else
 		printf("%x\n", magic);
+	print_cmds(env);
+	free_cmds(env->cmd);
 	free(env);
 	return (env->error);
 }

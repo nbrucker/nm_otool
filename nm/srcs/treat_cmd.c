@@ -1,36 +1,65 @@
 #include "libft.h"
 #include "nm.h"
 
-void	sort_cmds(t_cmd *cmds)
+void	sort_cmds(t_cmd *cmd)
 {
-	int	count;
+	t_cmd *in;
+	t_cmd *out;
+	t_cmd *tmp;
 
-	count = 0;
-	while (cmds && cmds->next)
+	out = cmd;
+	while (out)
 	{
-		if (ft_strcmp(cmds->name, cmds->next->name) > 0)
+		in = out->next;
+		while (in)
 		{
-			swap_cmd(cmds, cmds->next);
-			count++;
+			if (ft_strcmp(out->name, in->name) > 0)
+			{
+				swap_cmd(out, in);
+				tmp = out;
+				out = in;
+				in = tmp;
+			}
+			in = in->next;
 		}
-		else
-			cmds = cmds->next;
-		if (cmds->next == NULL && count > 0)
-		{
-			count = 0;
-			cmds = get_first_cmd(cmds);
-		}
+		out = out->next;
 	}
+}
+
+void	swap_all(t_cmd *a, t_cmd *b)
+{
+	t_cmd *next;
+	t_cmd *previous;
+
+	next = a->next;
+	previous = a->previous;
+	a->next = b->next;
+	a->previous = b->previous;
+	b->next = next;
+	b->previous = previous;
+	if (a->next)
+		a->next->previous = a;
+	if (a->previous)
+		a->previous->next = a;
+	if (b->next)
+		b->next->previous = b;
+	if (b->previous)
+		b->previous->next = b;
 }
 
 void	swap_cmd(t_cmd *a, t_cmd *b)
 {
-	a->next = b->next;
-	b->previous = a->previous;
-	a->previous = b;
-	b->next = a;
-	if (b->previous)
-		b->previous->next = b;
-	if (a->next)
-		a->next->previous = a;
+	if (a->next == b)
+	{
+		a->next = b->next;
+		b->previous = a->previous;
+		a->previous = b;
+		b->next = a;
+		if (b->previous)
+			b->previous->next = b;
+		if (a->next)
+			a->next->previous = a;
+	}
+	else
+		swap_all(a, b);
 }

@@ -23,7 +23,7 @@ void	h64_seg(struct mach_header_64 *h, struct load_command *lc, t_env *env)
 	while (i < h->ncmds && check_addr(lc, sizeof(struct load_command), env)
 		&& env->error == 0)
 	{
-		if (lc->cmdsize % 8 != 0)
+		if (lc->cmdsize < 1 || lc->cmdsize % 8 != 0)
 			return (error_cmdsize(env));
 		if (lc->cmd == LC_SEGMENT_64)
 			handle_64_segment(lc, env);
@@ -99,5 +99,5 @@ void	handle_64_symtab(struct load_command *lc, t_env *env)
 	if (env->error == 1)
 		return (free_cmds(cmds));
 	env->type = 64;
-	print_cmds(env, cmds);
+	env->cmd = cmds;
 }

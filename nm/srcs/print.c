@@ -1,26 +1,28 @@
 #include "libft.h"
 #include "nm.h"
 
-void	print_cmds(t_env *env, t_cmd *cmds)
+void	print_cmds(t_env *env)
 {
 	t_cmd	*next;
+	t_cmd *cmd;
 
-	sort_cmds(get_first_cmd(cmds));
-	cmds = get_first_cmd(cmds);
-	while (cmds)
+	if (!env->cmd)
+		return ;
+	cmd = env->cmd;
+	sort_cmds(get_first_cmd(cmd));
+	cmd = get_first_cmd(cmd);
+	while (cmd)
 	{
-		next = cmds->next;
+		next = cmd->next;
 		if (env->type == 64)
-			print_value_64(cmds->value, cmds->type);
+			print_value_64(cmd->value, cmd->type);
 		else
-			print_value_32(cmds->value, cmds->type);
+			print_value_32(cmd->value, cmd->type);
 		ft_putchar(' ');
-		ft_putchar(cmds->type);
+		ft_putchar(cmd->type);
 		ft_putchar(' ');
-		ft_putendl(cmds->name);
-		free(cmds->name);
-		free(cmds);
-		cmds = next;
+		ft_putendl(cmd->name);
+		cmd = next;
 	}
 }
 

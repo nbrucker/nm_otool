@@ -26,7 +26,7 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
 	t_cmd	*new;
 
 	if (!(new = (t_cmd*)malloc(sizeof(t_cmd))))
-		return (error_cmd(env, cmd, new));
+		return (error_cmd(env, cmds, new));
 	new->next = NULL;
 	new->previous = NULL;
 	if (cmds != NULL)
@@ -41,7 +41,7 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
 	else
 		new->name = ft_strdup("bad string index");
 	if (!new->name)
-		return (error_cmd(env, cmd, new));
+		return (error_cmd(env, cmds, new));
 	new->value = list.n_value;
 	new->type = get_type_64(list, env);
 	cmds = new;
@@ -53,7 +53,7 @@ t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env)
 	t_cmd	*new;
 
 	if (!(new = (t_cmd*)malloc(sizeof(t_cmd))))
-		return (error_cmd(env, cmd, new));
+		return (error_cmd(env, cmds, new));
 	new->next = NULL;
 	new->previous = NULL;
 	if (cmds != NULL)
@@ -68,7 +68,7 @@ t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env)
 	else
 		new->name = ft_strdup("bad string index");
 	if (!new->name)
-		return (error_cmd(env, cmd, new));
+		return (error_cmd(env, cmds, new));
 	new->value = list.n_value;
 	new->type = get_type_32(list, env);
 	cmds = new;

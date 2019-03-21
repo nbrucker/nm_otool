@@ -7,8 +7,10 @@
 # include <fcntl.h>
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
+# include <mach-o/fat.h>
 # include <sys/stat.h>
 # include <sys/mman.h>
+# include <stdlib.h>
 
 #include <stdio.h>
 
@@ -24,6 +26,8 @@ typedef struct    s_env
   int             b_index;
 
   int             error;
+
+  struct s_cmd    *cmd;
 }                 t_env;
 
 typedef struct		s_cmd
@@ -100,6 +104,12 @@ void	handle_be_64_segment(struct load_command *lc, t_env *env);
 void	handle_be_64_symtab(struct load_command *lc, t_env *env);
 
 /*
+*** handle_fat.c
+*/
+void	handle_be_fat(t_env *env);
+void	handle_fat(t_env *env);
+
+/*
 *** init.c
 */
 t_env	*init_env(void *ptr, size_t size);
@@ -113,7 +123,7 @@ int	handle_file(char *str, int ac);
 /*
 *** print.c
 */
-void	print_cmds(t_env *env, t_cmd *cmds);
+void	print_cmds(t_env *env);
 void	print_file_name(char *str);
 void	print_value_64(uint64_t value, char type);
 void	print_value_32(uint64_t value, char type);
@@ -127,7 +137,7 @@ int   reverse_int(int x);
 /*
 *** treat_cmd.c
 */
-void	sort_cmds(t_cmd *cmds);
+void	sort_cmds(t_cmd *cmd);
 void	swap_cmd(t_cmd *a, t_cmd *b);
 
 #endif
