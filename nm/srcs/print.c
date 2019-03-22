@@ -39,7 +39,7 @@ void	print_value_32(uint64_t value, char type)
 	int		i;
 	int		tmp;
 
-	if (type == 'U')
+	if (type == 'U' || type == 'u')
 		return (ft_putstr("        "));
 	ft_memset(buf, '0', 8);
 	i = 0;
@@ -67,7 +67,7 @@ void	print_value_64(uint64_t value, char type)
 	int		i;
 	int		tmp;
 
-	if (type == 'U')
+	if (type == 'U' || type == 'u')
 		return (ft_putstr("                "));
 	ft_memset(buf, '0', 16);
 	i = 0;

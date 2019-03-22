@@ -29,8 +29,8 @@ int	nm(void *ptr, size_t size)
 		handle_fat(env);
 	else if (magic == FAT_CIGAM)
 		handle_be_fat(env);
-	else
-		printf("%x\n", magic);
+	// else
+	// 	printf("%x\n", magic);
 	print_cmds(env);
 	free_cmds(env->cmd);
 	free(env);

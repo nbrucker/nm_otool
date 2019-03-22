@@ -16,7 +16,7 @@ void	*check_addr(void *addr, size_t size, t_env *env)
 		return (NULL);
 	}
 	addr += size;
-	if (addr < env->ptr || addr >= env->ptr + env->size)
+	if (addr < env->ptr || addr > env->ptr + env->size)
 	{
 		env->error = 1;
 		return (NULL);

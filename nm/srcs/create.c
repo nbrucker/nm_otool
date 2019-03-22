@@ -36,6 +36,8 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
 		cmds->next = new;
 		new->previous = cmds;
 	}
+	new->value = list.n_value;
+	new->type = get_type_64(list, env);
 	if (check_addr(table + list.n_un.n_strx, 1, env))
 		new->name = ft_strdup(table + list.n_un.n_strx);
 	else
@@ -43,8 +45,6 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
 	env->error = 0;
 	if (!new->name)
 		return (error_cmd(env, cmds, new));
-	new->value = list.n_value;
-	new->type = get_type_64(list, env);
 	cmds = new;
 	return (new);
 }
@@ -64,6 +64,8 @@ t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env)
 		cmds->next = new;
 		new->previous = cmds;
 	}
+	new->value = list.n_value;
+	new->type = get_type_32(list, env);
 	if (check_addr(table + list.n_un.n_strx, 1, env))
 		new->name = ft_strdup(table + list.n_un.n_strx);
 	else
@@ -71,8 +73,6 @@ t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env)
 	env->error = 0;
 	if (!new->name)
 		return (error_cmd(env, cmds, new));
-	new->value = list.n_value;
-	new->type = get_type_32(list, env);
 	cmds = new;
 	return (new);
 }
