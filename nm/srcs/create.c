@@ -3,22 +3,26 @@
 
 t_cmd	*error_cmd(t_env *env, t_cmd *cmd, t_cmd *new)
 {
-	t_cmd	*next;
-
 	env->error = 1;
-	cmd = get_first_cmd(cmd);
-	while (cmd)
-	{
-		next = cmd->next;
-		free(cmd->name);
-		free(cmd);
-		cmd = next;
-	}
+	free_cmds(cmd);
 	if (new && new->name)
 		free(new->name);
+	if (new && new->i_name)
+		free(new->i_name);
 	if (new)
 		free(new);
 	return (NULL);
+}
+
+char *cmd_get_name(t_env *env, char *addr)
+{
+	if (check_addr(addr, 1, env))
+		return (ft_strdup(addr));
+	else
+	{
+		env->error = 0;
+		return (ft_strdup("bad string index"));
+	}
 }
 
 t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
@@ -27,22 +31,18 @@ t_cmd	*create_cmd(t_cmd *cmds, char *table, struct nlist_64 list, t_env *env)
 
 	if (!(new = (t_cmd*)malloc(sizeof(t_cmd))))
 		return (error_cmd(env, cmds, new));
-	new->next = NULL;
-	new->previous = NULL;
-	if (cmds != NULL)
+	ft_bzero((void*)new, sizeof(t_cmd));
+	if ((cmds = get_last_cmd(cmds)))
 	{
-		while (cmds && cmds->next)
-			cmds = cmds->next;
 		cmds->next = new;
 		new->previous = cmds;
 	}
 	new->value = list.n_value;
 	new->type = get_type_64(list, env);
-	if (check_addr(table + list.n_un.n_strx, 1, env))
-		new->name = ft_strdup(table + list.n_un.n_strx);
-	else
-		new->name = ft_strdup("bad string index");
-	env->error = 0;
+	if (new->type == 'I' || new->type == 'i')
+		if (!(new->i_name = cmd_get_name(env, table + list.n_value)))
+			return (error_cmd(env, cmds, new));
+	new->name = cmd_get_name(env, table + list.n_un.n_strx);
 	if (!new->name)
 		return (error_cmd(env, cmds, new));
 	cmds = new;
@@ -55,22 +55,18 @@ t_cmd	*create_cmd_32(t_cmd *cmds, char *table, struct nlist list, t_env *env)
 
 	if (!(new = (t_cmd*)malloc(sizeof(t_cmd))))
 		return (error_cmd(env, cmds, new));
-	new->next = NULL;
-	new->previous = NULL;
-	if (cmds != NULL)
+	ft_bzero((void*)new, sizeof(t_cmd));
+	if ((cmds = get_last_cmd(cmds)))
 	{
-		while (cmds && cmds->next)
-			cmds = cmds->next;
 		cmds->next = new;
 		new->previous = cmds;
 	}
 	new->value = list.n_value;
 	new->type = get_type_32(list, env);
-	if (check_addr(table + list.n_un.n_strx, 1, env))
-		new->name = ft_strdup(table + list.n_un.n_strx);
-	else
-		new->name = ft_strdup("bad string index");
-	env->error = 0;
+	if (new->type == 'I' || new->type == 'i')
+		if (!(new->i_name = cmd_get_name(env, table + list.n_value)))
+			return (error_cmd(env, cmds, new));
+	new->name = cmd_get_name(env, table + list.n_un.n_strx);
 	if (!new->name)
 		return (error_cmd(env, cmds, new));
 	cmds = new;

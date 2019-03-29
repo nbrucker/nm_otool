@@ -1,7 +1,7 @@
 #include "libft.h"
 #include "nm.h"
 
-t_env	*init_env(void *ptr, size_t size)
+t_env	*init_env(void *ptr, size_t size, char *file)
 {
 	t_env			*env;
 
@@ -11,5 +11,6 @@ t_env	*init_env(void *ptr, size_t size)
 	env->sec_index = 1;
   env->ptr = ptr;
   env->size = size;
+	env->file = file;
 	return (env);
 }

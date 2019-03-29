@@ -8,15 +8,21 @@
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
+# include <mach-o/arch.h>
+# include <ar.h>
 # include <mach/machine.h>
 # include <sys/stat.h>
 # include <sys/mman.h>
 # include <stdlib.h>
 
+# define LIB_MAGIC 0x213c617263683e0a
+# define LIB_CIGAM 0x0a3e686372613c21
+
 #include <stdio.h>
 
 typedef struct    s_env
 {
+  char            *file;
   void            *ptr;
   size_t          size;
   int             type;
@@ -36,9 +42,20 @@ typedef struct		s_cmd
 	char			*name;
 	uint64_t		value;
 	char          type;
+  char *i_name;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }					t_cmd;
+
+typedef struct  s_arch
+{
+  char *name;
+  cpu_type_t  cputype;
+  cpu_subtype_t cpusubtype;
+}               t_arch;
+
+void	(*get_function(uint32_t magic32, uint64_t magic64))(t_env*);
+int	nm_inside(void *ptr, size_t size, char *file, char *name, int type);
 
 /*
 *** check.c
@@ -71,6 +88,7 @@ char	get_type_32(struct nlist list, t_env *env);
 char	get_type_64(struct nlist_64 list, t_env *env);
 char	get_section_64(unsigned char s, t_env *env);
 t_cmd	*get_first_cmd(t_cmd *cmds);
+t_cmd	*get_last_cmd(t_cmd *cmds);
 
 /*
 *** handle_32.c
@@ -113,12 +131,12 @@ void	handle_fat(t_env *env);
 /*
 *** init.c
 */
-t_env	*init_env(void *ptr, size_t size);
+t_env	*init_env(void *ptr, size_t size, char *file);
 
 /*
 *** main.c
 */
-int	nm(void *ptr, size_t size);
+int	nm(void *ptr, size_t size, char *file);
 int	handle_file(char *str, int ac);
 
 /*
@@ -138,6 +156,7 @@ int   reverse_int(int x);
 /*
 *** treat_cmd.c
 */
+void	set_ind_cmd_name(t_cmd *cmd);
 void	sort_cmds(t_cmd *cmd);
 void	swap_cmd(t_cmd *a, t_cmd *b);
 

@@ -8,6 +8,8 @@ void	free_cmds(t_cmd *cmd)
 	while (cmd)
 	{
 		next = cmd->next;
+		if (cmd->i_name)
+			free(cmd->i_name);
 		free(cmd->name);
 		free(cmd);
 		cmd = next;

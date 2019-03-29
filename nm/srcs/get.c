@@ -68,3 +68,10 @@ t_cmd	*get_first_cmd(t_cmd *cmds)
 		cmds = cmds->previous;
 	return (cmds);
 }
+
+t_cmd	*get_last_cmd(t_cmd *cmds)
+{
+	while (cmds && cmds->next)
+		cmds = cmds->next;
+	return (cmds);
+}

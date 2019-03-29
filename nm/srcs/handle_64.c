@@ -42,10 +42,12 @@ void	h64_sym(struct mach_header_64 *h, struct load_command *lc, t_env *env)
 		&& env->error == 0)
 	{
 		if (lc->cmd == LC_SYMTAB)
-			handle_64_symtab(lc, env);
+			return (handle_64_symtab(lc, env));
 		lc = (void*)lc + lc->cmdsize;
 		i++;
 	}
+	if (i == h->ncmds)
+		ft_putendl_fd("warning: ft_nm: no name list", 2);
 }
 
 void	handle_64_segment(struct load_command *lc, t_env *env)

@@ -1,6 +1,18 @@
 #include "libft.h"
 #include "nm.h"
 
+void	print_name(t_cmd *cmd)
+{
+	ft_putstr(cmd->name);
+	if (cmd->i_name)
+	{
+		ft_putstr(" (indirect for");
+		ft_putstr(cmd->i_name);
+		ft_putchar(')');
+	}
+	ft_putchar('\n');
+}
+
 void	print_cmds(t_env *env)
 {
 	t_cmd	*next;
@@ -9,6 +21,7 @@ void	print_cmds(t_env *env)
 	if (!env->cmd)
 		return ;
 	cmd = env->cmd;
+	set_ind_cmd_name(cmd);
 	sort_cmds(get_first_cmd(cmd));
 	cmd = get_first_cmd(cmd);
 	while (cmd)
@@ -39,7 +52,7 @@ void	print_value_32(uint64_t value, char type)
 	int		i;
 	int		tmp;
 
-	if (type == 'U' || type == 'u')
+	if (type == 'U' || type == 'u' || type == 'I' || type == 'i')
 		return (ft_putstr("        "));
 	ft_memset(buf, '0', 8);
 	i = 0;
@@ -67,7 +80,7 @@ void	print_value_64(uint64_t value, char type)
 	int		i;
 	int		tmp;
 
-	if (type == 'U' || type == 'u')
+	if (type == 'U' || type == 'u' || type == 'I' || type == 'i')
 		return (ft_putstr("                "));
 	ft_memset(buf, '0', 16);
 	i = 0;
