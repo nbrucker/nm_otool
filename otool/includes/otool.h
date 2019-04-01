@@ -7,6 +7,10 @@
 # include <sys/stat.h>
 # include <sys/mman.h>
 # include <stdlib.h>
+# include <ar.h>
+
+# define LIB_MAGIC 0x213c617263683e0a
+# define LIB_CIGAM 0x0a3e686372613c21
 
 #include <stdio.h>
 
@@ -19,7 +23,9 @@ typedef struct    s_env
   int             error;
 
   char            *arch;
+  char            *lib_name;
   int             type;
+  int			le;
 }                 t_env;
 
 typedef struct  s_arch
@@ -29,6 +35,8 @@ typedef struct  s_arch
   cpu_subtype_t cpusubtype;
 }               t_arch;
 
+int otool_inside(void *ptr, size_t size, char *file, char *name, int type);
+int		is_arm_ppc(char *arch);
 char  *arch_get_name(cpu_type_t cputype, cpu_subtype_t cpusubtype);
 t_env	*init_env(void *ptr, size_t size, char *file);
 void	print_addr_64(uint64_t value);
@@ -58,6 +66,7 @@ int				error_not_file(char *str);
 int				error_opening_file(char *str);
 int       ft_error(char *str);
 void      error_cmdsize(t_env *env);
+void	error_file_format(t_env *env);
 
 /*
 *** reverse.c

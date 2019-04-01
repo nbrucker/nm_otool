@@ -26,3 +26,9 @@ void	error_cmdsize(t_env *env)
 	env->error = 1;
 	ft_putendl_fd("wrong cmdsize", 2);
 }
+
+void	error_file_format(t_env *env)
+{
+	ft_putstr(env->file);
+	ft_putendl(": is not an object file");
+}

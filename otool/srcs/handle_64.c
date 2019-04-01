@@ -27,26 +27,43 @@ void	print_addr_64(uint64_t value)
 	}
 }
 
+void	reverse_section_64(t_env *env, struct section_64 *sec)
+{
+	uint32_t *ptr;
+	uint32_t i;
+
+	if (!(ptr = (uint32_t*)check_addr(env->ptr + sec->offset, sec->size, env)))
+		return ;
+	i = 0;
+	while (i * 4 < sec->size)
+	{
+		ptr[i] = reverse_int(ptr[i]);
+		i++;
+	}
+}
+
 void	print_section_64(t_env *env, struct section_64 *sec)
 {
 	uint8_t *ptr;
 	uint32_t i;
 	uint32_t j;
 
-	i = 0;
-	ptr = (uint8_t*)(env->ptr + sec->offset);
-	if (!check_addr(ptr, sec->size, env))
+	if (is_arm_ppc(env->arch) && env->le == 1)
+		reverse_section_64(env, sec);
+	if (!(ptr = (uint8_t*)check_addr(env->ptr + sec->offset, sec->size, env)))
 		return ;
+	i = 0;
 	while (i < sec->size)
 	{
 		print_addr_64(sec->addr + i);
-		ft_putchar(' ');
+		ft_putchar('\t');
 		j = 0;
 		while (j < 16 && i + j < sec->size)
 		{
 			print_number(ptr[j] / 16);
 			print_number(ptr[j] % 16);
-			ft_putchar(' ');
+			if (!is_arm_ppc(env->arch) || (j + 1) % 4 == 0)
+				ft_putchar(' ');
 			j++;
 		}
 		ft_putchar('\n');
@@ -81,6 +98,7 @@ void	handle_64(t_env *env)
 	struct load_command		*lc;
 	uint32_t i;
 
+	env->le = 1;
 	if (!(h = (struct mach_header_64*)check_addr(env->ptr,
 		sizeof(struct mach_header_64), env)))
 		return ;
