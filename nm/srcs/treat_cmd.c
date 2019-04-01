@@ -1,6 +1,18 @@
 #include "libft.h"
 #include "nm.h"
 
+t_cmd	*find_cmd_with_name(t_cmd *cmd, char *name)
+{
+	cmd= get_first_cmd(cmd);
+	while (cmd)
+	{
+		if (ft_strcmp(cmd->name, name) == 0)
+			return (cmd);
+		cmd = cmd->next;
+	}
+	return (NULL);
+}
+
 void	set_ind_cmd_name(t_cmd *cmd)
 {
 	char *tmp;
@@ -8,18 +20,21 @@ void	set_ind_cmd_name(t_cmd *cmd)
 	cmd = get_first_cmd(cmd);
 	while (cmd)
 	{
-		if (cmd->i_name)
+		if (cmd->i_name && !find_cmd_with_name(cmd, cmd->name))
 		{
-			//protege malloc
 			tmp = cmd->name;
-			cmd->name = ft_strjoin(cmd->name, " (indirect for ");
+			if (!(cmd->name = ft_strjoin(cmd->name, " (indirect for ")))
+				return ;
 			free(tmp);
 			tmp = cmd->name;
-			cmd->name = ft_strjoin(cmd->name, cmd->i_name);
+			if (!(cmd->name = ft_strjoin(cmd->name, cmd->i_name)))
+				return ;
 			free(tmp);
 			tmp = cmd->name;
-			cmd->name = ft_strjoin(cmd->name, ")");
+			if (!(cmd->name = ft_strjoin(cmd->name, ")")))
+				return ;
 			free(tmp);
+			cmd->ind = 1;
 		}
 		cmd = cmd->next;
 	}

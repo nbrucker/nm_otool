@@ -68,14 +68,13 @@ int	nm_inside(void *ptr, size_t size, char *file, char *name, int type)
 	f = get_function(((uint32_t*)ptr)[0], ((uint64_t*)ptr)[0]);
 	if (f)
 		f(env);
-	if (env->cmd)
-	{
-		if (type == 1)
-			print_ar_name(env, name);
-		else if (type == 2)
-			print_fat_arch(env, name);
-		print_cmds(env);
-	}
+	else
+		error_file_format(env);
+	if (type == 1)
+		print_ar_name(env, name);
+	else if (type == 2)
+		print_fat_arch(env, name);
+	print_cmds(env);
 	free_cmds(env->cmd);
 	ret = env->error;
 	free(env);
@@ -143,6 +142,8 @@ int	nm(void *ptr, size_t size, char *file)
 	f = get_function(((uint32_t*)ptr)[0], ((uint64_t*)ptr)[0]);
 	if (f)
 		f(env);
+	else
+		error_file_format(env);
 	if (env->cmd)
 		print_cmds(env);
 	free_cmds(env->cmd);

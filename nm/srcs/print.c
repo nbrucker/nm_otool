@@ -28,9 +28,9 @@ void	print_cmds(t_env *env)
 	{
 		next = cmd->next;
 		if (env->type == 64)
-			print_value_64(cmd->value, cmd->type);
+			print_value_64(cmd->value, cmd->type, cmd->ind);
 		else
-			print_value_32(cmd->value, cmd->type);
+			print_value_32(cmd->value, cmd->type, cmd->ind);
 		ft_putchar(' ');
 		ft_putchar(cmd->type);
 		ft_putchar(' ');
@@ -46,13 +46,13 @@ void	print_file_name(char *str)
 	ft_putstr(":\n");
 }
 
-void	print_value_32(uint64_t value, char type)
+void	print_value_32(uint64_t value, char type, int ind)
 {
 	char	buf[8];
 	int		i;
 	int		tmp;
 
-	if (type == 'U' || type == 'u' || type == 'I' || type == 'i')
+	if (type == 'U' || type == 'u' || ind)
 		return (ft_putstr("        "));
 	ft_memset(buf, '0', 8);
 	i = 0;
@@ -74,13 +74,13 @@ void	print_value_32(uint64_t value, char type)
 	}
 }
 
-void	print_value_64(uint64_t value, char type)
+void	print_value_64(uint64_t value, char type, int ind)
 {
 	char	buf[16];
 	int		i;
 	int		tmp;
 
-	if (type == 'U' || type == 'u' || type == 'I' || type == 'i')
+	if (type == 'U' || type == 'u' || ind)
 		return (ft_putstr("                "));
 	ft_memset(buf, '0', 16);
 	i = 0;

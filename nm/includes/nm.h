@@ -43,6 +43,7 @@ typedef struct		s_cmd
 	uint64_t		value;
 	char          type;
   char *i_name;
+  int ind;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }					t_cmd;
@@ -75,6 +76,7 @@ int				error_not_file(char *str);
 int				error_opening_file(char *str);
 int       ft_error(char *str);
 void      error_cmdsize(t_env *env);
+void      error_file_format(t_env *env);
 
 /*
 *** free.c
@@ -144,8 +146,8 @@ int	handle_file(char *str, int ac);
 */
 void	print_cmds(t_env *env);
 void	print_file_name(char *str);
-void	print_value_64(uint64_t value, char type);
-void	print_value_32(uint64_t value, char type);
+void	print_value_64(uint64_t value, char type, int ind);
+void	print_value_32(uint64_t value, char type, int ind);
 
 /*
 *** reverse.c

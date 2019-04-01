@@ -26,3 +26,11 @@ void	error_cmdsize(t_env *env)
 	env->error = 1;
 	ft_putendl_fd("wrong cmdsize", 2);
 }
+
+void	error_file_format(t_env *env)
+{
+	ft_putstr_fd("ft_nm: ", 2);
+	ft_putstr_fd(env->file, 2);
+	ft_putendl_fd(" The file was not recognized as a valid object file", 2);
+	env->error = 1;
+}
