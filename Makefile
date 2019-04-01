@@ -37,7 +37,15 @@ SRCS_NM =	check.c \
 					treat_cmd.c \
 
 
-SRCS_OTOOL = main.c
+SRCS_OTOOL = check.c \
+							error.c \
+							handle_32.c \
+							handle_64.c \
+							handle_be_32.c \
+							handle_be_64.c \
+							handle_fat.c \
+							main.c \
+							reverse.c
 
 HDRS_NM = nm.h
 
