@@ -1,6 +1,6 @@
 #include "otool.h"
 
-int	check_ar_name(void *addr, t_env *env)
+int		check_ar_name(void *addr, t_env *env)
 {
 	char *name;
 

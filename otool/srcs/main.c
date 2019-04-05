@@ -10,7 +10,7 @@ int		is_arm_ppc(char *arch)
 	return (0);
 }
 
-void	(*get_function(uint32_t magic32, uint64_t magic64))(t_env*)
+void	*get_function(uint32_t magic32, uint64_t magic64)
 {
 	(void)magic64;
 	if (magic32 == MH_MAGIC_64)
@@ -30,11 +30,11 @@ void	(*get_function(uint32_t magic32, uint64_t magic64))(t_env*)
 	return (NULL);
 }
 
-int	otool(void *ptr, size_t size, char *file)
+int		otool(void *ptr, size_t size, char *file)
 {
-	void (*f)(t_env*);
-	t_env			*env;
-	int				ret;
+	void	(*f)(t_env*);
+	t_env	*env;
+	int		ret;
 
 	if (!(env = init_env(ptr, size, file)))
 		return (1);
@@ -52,7 +52,7 @@ int	otool(void *ptr, size_t size, char *file)
 	return (ret);
 }
 
-int	handle_file(char *str)
+int		handle_file(char *str)
 {
 	int			fd;
 	struct stat	buf;

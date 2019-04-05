@@ -4,8 +4,8 @@
 void	handle_be_32_segment(struct load_command *lc, t_env *env)
 {
 	struct segment_command	*seg;
-	struct section					*sec;
-	uint32_t i;
+	struct section			*sec;
+	uint32_t				i;
 
 	if (!(seg = (struct segment_command*)check_addr(lc,
 		sizeof(struct segment_command), env)))
@@ -29,7 +29,7 @@ void	handle_be_32_segment(struct load_command *lc, t_env *env)
 
 void	handle_be_32(t_env *env)
 {
-	struct mach_header	*h;
+	struct mach_header		*h;
 	struct load_command		*lc;
 	uint32_t				i;
 

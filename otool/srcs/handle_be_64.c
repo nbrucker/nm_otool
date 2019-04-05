@@ -4,8 +4,8 @@
 void	handle_be_64_segment(struct load_command *lc, t_env *env)
 {
 	struct segment_command_64	*seg;
-	struct section_64					*sec;
-	uint32_t i;
+	struct section_64			*sec;
+	uint32_t					i;
 
 	if (!(seg = (struct segment_command_64*)check_addr(lc,
 		sizeof(struct segment_command_64), env)))

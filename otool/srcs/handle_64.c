@@ -44,9 +44,9 @@ void	reverse_section_64(t_env *env, struct section_64 *sec)
 
 void	print_section_64(t_env *env, struct section_64 *sec)
 {
-	uint8_t *ptr;
-	uint32_t i;
-	uint32_t j;
+	uint8_t		*ptr;
+	uint32_t	i;
+	uint32_t	j;
 
 	if (is_arm_ppc(env->arch) && env->le == 1)
 		reverse_section_64(env, sec);
@@ -60,23 +60,22 @@ void	print_section_64(t_env *env, struct section_64 *sec)
 		j = 0;
 		while (j < 16 && i + j < sec->size)
 		{
-			print_number(ptr[j] / 16);
-			print_number(ptr[j] % 16);
+			print_number(ptr[i + j] / 16);
+			print_number(ptr[i + j] % 16);
 			if (!is_arm_ppc(env->arch) || (j + 1) % 4 == 0)
 				ft_putchar(' ');
 			j++;
 		}
 		ft_putchar('\n');
 		i += 16;
-		ptr += 16;
 	}
 }
 
 void	handle_64_segment(struct load_command *lc, t_env *env)
 {
 	struct segment_command_64	*seg;
-	struct section_64					*sec;
-	uint32_t									i;
+	struct section_64			*sec;
+	uint32_t					i;
 
 	if (!(seg = (struct segment_command_64*)check_addr(lc,
 		sizeof(struct segment_command_64), env)))
@@ -96,7 +95,7 @@ void	handle_64(t_env *env)
 {
 	struct mach_header_64	*h;
 	struct load_command		*lc;
-	uint32_t i;
+	uint32_t				i;
 
 	env->le = 1;
 	if (!(h = (struct mach_header_64*)check_addr(env->ptr,

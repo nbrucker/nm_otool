@@ -1,6 +1,6 @@
 #include "nm.h"
 
-int	nm_inside_lib(void *ptr, size_t size, char *file, char *name)
+int		nm_inside_lib(void *ptr, size_t size, char *file, char *name)
 {
 	void	(*f)(t_env*);
 	t_env	*env;
