@@ -65,7 +65,7 @@ char	*arch_get_name(cpu_type_t cputype, cpu_subtype_t cpusubtype)
 	return ("");
 }
 
-int		otool_inside(void *ptr, size_t size, char *file, char *name)
+int		otool_inside_fat(void *ptr, size_t size, char *file, char *name)
 {
 	void	(*f)(t_env*);
 	t_env	*env;
@@ -75,12 +75,9 @@ int		otool_inside(void *ptr, size_t size, char *file, char *name)
 		return (1);
 	if (size < 8)
 		return (1);
+	env->type = 1;
 	env->lib_name = name;
 	f = get_function(((uint32_t*)ptr)[0], ((uint64_t*)ptr)[0]);
-	if (f && (f == &handle_fat || f == &handle_be_fat))
-		env->type = 1;
-	if (f && f == &handle_lib)
-		env->type = 2;
 	if (f)
 		f(env);
 	ret = env->error;
@@ -99,7 +96,7 @@ void	fat_print_all(t_env *env, struct fat_arch *a, uint32_t n)
 		sizeof(struct fat_arch), env) && env->error == 0)
 	{
 		if (check_addr(env->ptr + a->offset, a->size, env))
-			env->error = otool_inside(env->ptr + a->offset, a->size,
+			env->error = otool_inside_fat(env->ptr + a->offset, a->size,
 				env->file, NULL);
 		a++;
 		i++;

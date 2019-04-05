@@ -12,7 +12,6 @@ int		is_arm_ppc(char *arch)
 
 void	*get_function(uint32_t magic32, uint64_t magic64)
 {
-	(void)magic64;
 	if (magic32 == MH_MAGIC_64)
 		return (&handle_64);
 	else if (magic32 == MH_CIGAM_64)
