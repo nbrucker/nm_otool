@@ -24,6 +24,7 @@ SRCS_NM =	check.c \
 					create.c \
 					error.c \
 					free.c \
+					get_ar.c \
 					get.c \
 					handle_32.c \
 					handle_64.c \
@@ -31,7 +32,9 @@ SRCS_NM =	check.c \
 					handle_be_64.c \
 					handle_fat.c \
 					init.c \
+					lib.c \
 					main.c \
+					print_ar.c \
 					print.c \
 					reverse.c \
 					treat_cmd.c \
@@ -39,13 +42,17 @@ SRCS_NM =	check.c \
 
 SRCS_OTOOL = check.c \
 							error.c \
+							get.c \
 							handle_32.c \
 							handle_64.c \
 							handle_be_32.c \
 							handle_be_64.c \
 							handle_fat.c \
+							init.c \
+							lib.c \
 							main.c \
-							reverse.c
+							print.c \
+							reverse.c \
 
 HDRS_NM = nm.h
 

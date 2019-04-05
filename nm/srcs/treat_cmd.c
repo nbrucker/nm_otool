@@ -3,7 +3,7 @@
 
 t_cmd	*find_cmd_with_name(t_cmd *cmd, char *name)
 {
-	cmd= get_first_cmd(cmd);
+	cmd = get_first_cmd(cmd);
 	while (cmd)
 	{
 		if (ft_strcmp(cmd->name, name) == 0)

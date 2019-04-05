@@ -61,6 +61,7 @@ int	nm_inside(void *ptr, size_t size, char *file, char *name, int type);
 /*
 *** check.c
 */
+int	check_ar_name(void *addr, t_env *env);
 void	*check_addr(void *addr, size_t size, t_env *env);
 
 /*
@@ -83,6 +84,11 @@ void      error_file_format(t_env *env);
 */
 void  free_cmds(t_cmd *cmd);
 
+/*
+*** get_ar.c
+*/
+int   get_ar_size(struct ar_hdr *hdr);
+void	*get_ar_addr(char *name);
 /*
 *** get.c
 */
@@ -136,10 +142,24 @@ void	handle_fat(t_env *env);
 t_env	*init_env(void *ptr, size_t size, char *file);
 
 /*
+*** lib.c
+*/
+int   nm_inside(void *ptr, size_t size, char *file, char *name, int type);
+void	handle_lib(t_env *env);
+
+/*
 *** main.c
 */
 int	nm(void *ptr, size_t size, char *file);
 int	handle_file(char *str, int ac);
+void	(*get_function(uint32_t magic32, uint64_t magic64))(t_env*);
+void	set_error(t_env *env);
+
+/*
+*** print_ar.c
+*/
+void	print_fat_arch(t_env *env, char *name);
+void	print_ar_name(t_env *env, char *name);
 
 /*
 *** print.c
