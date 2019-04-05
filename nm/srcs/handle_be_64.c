@@ -13,7 +13,8 @@ void	handle_be_64(t_env *env)
 	header->ncmds = reverse_int(header->ncmds);
 	lc = env->ptr + sizeof(struct mach_header_64);
 	i = 0;
-	while (i < header->ncmds && check_addr(lc, sizeof(struct load_command), env))
+	while (i < header->ncmds
+		&& check_addr(lc, sizeof(struct load_command), env))
 	{
 		lc->cmdsize = reverse_int(lc->cmdsize);
 		lc->cmd = reverse_int(lc->cmd);

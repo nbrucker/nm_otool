@@ -1,7 +1,7 @@
 #include "nm.h"
 #include "libft.h"
 
-int	get_ar_size(struct ar_hdr *hdr)
+int		get_ar_size(struct ar_hdr *hdr)
 {
 	char tmp[11];
 

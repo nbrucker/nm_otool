@@ -15,7 +15,7 @@ long	reverse_long(long x)
 	return (new);
 }
 
-int	reverse_int(int x)
+int		reverse_int(int x)
 {
 	int new;
 

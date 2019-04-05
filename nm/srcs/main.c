@@ -6,7 +6,7 @@ void	set_error(t_env *env)
 	env->error = 1;
 }
 
-void	(*get_function(uint32_t magic32, uint64_t magic64))(t_env*)
+void	*get_function(uint32_t magic32, uint64_t magic64)
 {
 	if (magic32 == MH_MAGIC_64)
 		return (&handle_64);
@@ -25,11 +25,11 @@ void	(*get_function(uint32_t magic32, uint64_t magic64))(t_env*)
 	return (NULL);
 }
 
-int	nm(void *ptr, size_t size, char *file)
+int		nm(void *ptr, size_t size, char *file)
 {
-	void (*f)(t_env*);
-	t_env			*env;
-	int				ret;
+	void	(*f)(t_env*);
+	t_env	*env;
+	int		ret;
 
 	if (!(env = init_env(ptr, size, file)))
 		return (1);
@@ -48,7 +48,7 @@ int	nm(void *ptr, size_t size, char *file)
 	return (ret);
 }
 
-int	handle_file(char *str, int ac)
+int		handle_file(char *str, int ac)
 {
 	int			fd;
 	struct stat	buf;

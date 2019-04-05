@@ -16,7 +16,7 @@ void	print_name(t_cmd *cmd)
 void	print_cmds(t_env *env)
 {
 	t_cmd	*next;
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	if (!env->cmd)
 		return ;

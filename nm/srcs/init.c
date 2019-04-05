@@ -9,8 +9,8 @@ t_env	*init_env(void *ptr, size_t size, char *file)
 		return (NULL);
 	ft_bzero((void*)env, sizeof(t_env));
 	env->sec_index = 1;
-  env->ptr = ptr;
-  env->size = size;
+	env->ptr = ptr;
+	env->size = size;
 	env->file = file;
 	return (env);
 }

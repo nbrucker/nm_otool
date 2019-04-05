@@ -2,7 +2,7 @@
 
 char	get_type_32(struct nlist list, t_env *env)
 {
-	char					r;
+	char			r;
 	unsigned char	c;
 
 	c = list.n_type & N_TYPE;
@@ -27,7 +27,7 @@ char	get_type_32(struct nlist list, t_env *env)
 
 char	get_type_64(struct nlist_64 list, t_env *env)
 {
-	char					r;
+	char			r;
 	unsigned char	c;
 
 	c = list.n_type & N_TYPE;

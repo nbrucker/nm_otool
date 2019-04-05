@@ -53,7 +53,8 @@ void	sort_cmds(t_cmd *cmd)
 		while (in)
 		{
 			if (ft_strcmp(out->name, in->name) > 0
-				|| (ft_strcmp(out->name, in->name) == 0 && out->value > in->value))
+				|| (ft_strcmp(out->name, in->name) == 0
+					&& out->value > in->value))
 			{
 				swap_cmd(out, in);
 				tmp = out;

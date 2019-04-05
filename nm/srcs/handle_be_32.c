@@ -2,7 +2,7 @@
 
 void	handle_be_32(t_env *env)
 {
-	struct mach_header	*header;
+	struct mach_header		*header;
 	struct load_command		*lc;
 	uint32_t				i;
 
@@ -13,7 +13,8 @@ void	handle_be_32(t_env *env)
 	header->ncmds = reverse_int(header->ncmds);
 	lc = env->ptr + sizeof(struct mach_header);
 	i = 0;
-	while (i < header->ncmds && check_addr(lc, sizeof(struct load_command), env))
+	while (i < header->ncmds
+		&& check_addr(lc, sizeof(struct load_command), env))
 	{
 		lc->cmdsize = reverse_int(lc->cmdsize);
 		lc->cmd = reverse_int(lc->cmd);

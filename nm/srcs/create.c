@@ -14,7 +14,7 @@ t_cmd	*error_cmd(t_env *env, t_cmd *cmd, t_cmd *new)
 	return (NULL);
 }
 
-char *cmd_get_name(t_env *env, char *addr)
+char	*cmd_get_name(t_env *env, char *addr)
 {
 	if (check_addr(addr, 1, env))
 		return (ft_strdup(addr));

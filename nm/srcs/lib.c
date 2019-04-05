@@ -1,10 +1,10 @@
 #include "nm.h"
 
-int	nm_inside(void *ptr, size_t size, char *file, char *name, int type)
+int	nm_inside_lib(void *ptr, size_t size, char *file, char *name)
 {
-	void (*f)(t_env*);
-	t_env			*env;
-	int				ret;
+	void	(*f)(t_env*);
+	t_env	*env;
+	int		ret;
 
 	if (!(env = init_env(ptr, size, file)))
 		return (1);
@@ -15,10 +15,7 @@ int	nm_inside(void *ptr, size_t size, char *file, char *name, int type)
 		f(env);
 	else
 		error_file_format(env);
-	if (type == 1)
-		print_ar_name(env, name);
-	else if (type == 2)
-		print_fat_arch(env, name);
+	print_ar_name(env, name);
 	print_cmds(env);
 	free_cmds(env->cmd);
 	ret = env->error;
@@ -28,11 +25,11 @@ int	nm_inside(void *ptr, size_t size, char *file, char *name, int type)
 
 void	handle_lib(t_env *env)
 {
-	struct ar_hdr *hdr;
-	void *ptr;
-	int size;
-	char *name;
-	void *new;
+	struct ar_hdr	*hdr;
+	void			*ptr;
+	int				size;
+	char			*name;
+	void			*new;
 
 	ptr = env->ptr + 8;
 	if (!check_addr(ptr, sizeof(struct ar_hdr), env))
@@ -40,7 +37,8 @@ void	handle_lib(t_env *env)
 	hdr = (struct ar_hdr*)ptr;
 	size = get_ar_size(hdr);
 	ptr += sizeof(struct ar_hdr) + size;
-	while (ptr < env->ptr + env->size && env->error == 0 && check_addr(ptr, sizeof(struct ar_hdr), env))
+	while (ptr < env->ptr + env->size && env->error == 0
+		&& check_addr(ptr, sizeof(struct ar_hdr), env))
 	{
 		hdr = (struct ar_hdr*)ptr;
 		size = get_ar_size(hdr);
@@ -48,7 +46,8 @@ void	handle_lib(t_env *env)
 			return ;
 		name = ptr + sizeof(struct ar_hdr);
 		new = get_ar_addr(name);
-		env->error = nm_inside(new, size - (new - (void*)name), env->file, name, 1);
+		env->error = nm_inside_lib(new, size - (new - (void*)name),
+			env->file, name);
 		ptr += sizeof(struct ar_hdr) + size;
 	}
 }
