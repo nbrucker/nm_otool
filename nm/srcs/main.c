@@ -83,8 +83,7 @@ int		main(int ac, char **av)
 		i = 1;
 		while (i < ac)
 		{
-			if (handle_file(av[i], ac) == 1)
-				return (1);
+			handle_file(av[i], ac);
 			i++;
 		}
 	}
