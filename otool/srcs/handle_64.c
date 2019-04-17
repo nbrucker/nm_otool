@@ -35,7 +35,7 @@ void	reverse_section_64(t_env *env, struct section_64 *sec)
 	if (!(ptr = (uint32_t*)check_addr(env->ptr + sec->offset, sec->size, env)))
 		return ;
 	i = 0;
-	while (i * 4 < sec->size)
+	while (i * 4 < sec->size && check_addr(ptr + i, 4, env))
 	{
 		ptr[i] = reverse_int(ptr[i]);
 		i++;
@@ -53,12 +53,12 @@ void	print_section_64(t_env *env, struct section_64 *sec)
 	if (!(ptr = (uint8_t*)check_addr(env->ptr + sec->offset, sec->size, env)))
 		return ;
 	i = 0;
-	while (i < sec->size)
+	while (i < sec->size && env->error == 0)
 	{
 		print_addr_64(sec->addr + i);
 		ft_putchar('\t');
 		j = 0;
-		while (j < 16 && i + j < sec->size)
+		while (j < 16 && i + j < sec->size && check_addr(ptr + i + j, 1, env))
 		{
 			print_number(ptr[i + j] / 16);
 			print_number(ptr[i + j] % 16);
